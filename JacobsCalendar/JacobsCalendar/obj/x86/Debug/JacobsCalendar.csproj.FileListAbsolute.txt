@@ -1,0 +1,12 @@
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\bin\Debug\JacobsCalendar.exe
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\bin\Debug\JacobsCalendar.pdb
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar.csprojResolveAssemblyReference.cache
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\MainWindow.baml
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\App.g.cs
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar_MarkupCompile.cache
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar.g.resources
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar.Properties.Resources.resources
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar.csproj.GenerateResource.Cache
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar.exe
+C:\Users\Samsung\Documents\GitHub\JacobsCalendar\JacobsCalendar\JacobsCalendar\obj\x86\Debug\JacobsCalendar.pdb
