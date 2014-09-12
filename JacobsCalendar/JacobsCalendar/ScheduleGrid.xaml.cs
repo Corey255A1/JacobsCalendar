@@ -35,27 +35,48 @@ namespace JacobsCalendar
 
             Rows = rows;
             Cols = cols;
-            TGrid_OffsetX = Canvas.GetLeft(timeGrid);
-            TGrid_OffsetY = Canvas.GetTop(timeGrid);
+            TGrid_OffsetX = Canvas.GetLeft(timeGrid)+GRID_SIZE/2;
+            TGrid_OffsetY = Canvas.GetTop(timeGrid) + GRID_SIZE / 2;
             EGrid_OffsetX = Canvas.GetLeft(eventGrid);
             EGrid_OffsetY = Canvas.GetTop(eventGrid);
             // Initialize the Grid Cols and Rows
+
+            //Label Fields : half sized
+            ColumnDefinition cd = new ColumnDefinition();
+            cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE/2));
+            timeGrid.ColumnDefinitions.Add(cd);
+
+            RowDefinition rd = new RowDefinition();
+            rd.SetValue(RowDefinition.HeightProperty, new GridLength(GRID_SIZE/2));
+            timeGrid.RowDefinitions.Add(rd);
+
+            //Data Fields
             int i;
+            TextBox lbl;
             for (i = 0; i < Cols; i++)
             {
-                ColumnDefinition cd = new ColumnDefinition();
+                cd = new ColumnDefinition();
                 cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE));
                 timeGrid.ColumnDefinitions.Add(cd);
+                lbl = new TextBox();
+                lbl.Text = "COLUMN: " + i;
+                Grid.SetColumn(lbl, i + 1);
+                timeGrid.Children.Add(lbl);
 
-                ColumnDefinition ed = new ColumnDefinition();
-                ed.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE));
-                eventGrid.ColumnDefinitions.Add(ed);
+                cd = new ColumnDefinition();
+                cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE));
+                eventGrid.ColumnDefinitions.Add(cd);
+
             }
             for (i = 0; i < Rows; i++)
             {
-                RowDefinition rd = new RowDefinition();
+                rd = new RowDefinition();
                 rd.SetValue(RowDefinition.HeightProperty, new GridLength(GRID_SIZE));
                 timeGrid.RowDefinitions.Add(rd);
+                lbl = new TextBox();
+                lbl.Text = "ROW: " + i;
+                Grid.SetRow(lbl, i + 1);
+                timeGrid.Children.Add(lbl);
             }
         }
 
@@ -68,9 +89,9 @@ namespace JacobsCalendar
             timeGrid.Children.Add(newBox);
         }
 
-        public void NewEvent()
+        public void NewEvent(String title = "New Event", String desc = "A New Event")
         {
-            ScheduleBox newBox = new ScheduleBox();
+            ScheduleBox newBox = new ScheduleBox(title,desc);
             newBox.ScheduleBoxClicked += this.ScheduleBox_Clicked;
             eventGrid.Children.Add(newBox);
             Grid.SetColumn(newBox, NextEventCol++);
@@ -81,8 +102,8 @@ namespace JacobsCalendar
             GridPos gp;
             if (y >= TGrid_OffsetY)
             {
-                gp.Col = (int)((x - TGrid_OffsetX) / GRID_SIZE);
-                gp.Row = (int)((y - TGrid_OffsetY) / GRID_SIZE);
+                gp.Col = (int)((x - TGrid_OffsetX) / GRID_SIZE) + 1;
+                gp.Row = (int)((y - TGrid_OffsetY) / GRID_SIZE) + 1;
                 gp.WhichGrid = GridNames.Time;
             }
             else

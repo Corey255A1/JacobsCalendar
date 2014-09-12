@@ -1,6 +1,10 @@
 ﻿<Window x:Class="JacobsCalendar.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="345" Width="682" MouseMove="Window_MouseMove">
-    <Canvas Name="theDisplayCvs" Background="Blue"></Canvas>
+        Title="MainWindow" Height="400" Width="800" WindowState="Maximized" WindowStyle="SingleBorderWindow">
+    <Canvas Name="theDisplayCvs" Background="Blue">
+        <Menu Canvas.Left="0" Canvas.Top="0" Height="23" Name="actionMenu" Width="200">
+            <MenuItem Header="New Event" Click="MenuItem_Click" />
+        </Menu>
+    </Canvas>
 </Window>

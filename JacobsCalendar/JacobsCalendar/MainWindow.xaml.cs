@@ -19,19 +19,21 @@ namespace JacobsCalendar
     /// </summary>
     public partial class MainWindow : Window
     {
+        ScheduleGrid schedGrid;
         public MainWindow()
         {
             InitializeComponent();
-            ScheduleGrid schedGrid = new ScheduleGrid(8,2);
+            schedGrid = new ScheduleGrid(8, 2);
             theDisplayCvs.Children.Add(schedGrid);
+            Canvas.SetTop(schedGrid, 20);
             schedGrid.NewEvent();
-            schedGrid.NewEvent();
-            schedGrid.NewEvent();
+            schedGrid.NewEvent("This is a test");
+            schedGrid.NewEvent("Test2","A better test");
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
+            schedGrid.NewEvent();
         }
 
     }

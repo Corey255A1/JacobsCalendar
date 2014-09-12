@@ -32,6 +32,12 @@ namespace JacobsCalendar
         {
             InitializeComponent();
         }
+        public ScheduleBox(String title, String desc)
+        {
+            InitializeComponent();
+            titleBox.Text = title;
+            descriptionBox.Text = desc;
+        }
 
         /**
          * When ever the mouse moves, if the left button is down
@@ -45,8 +51,9 @@ namespace JacobsCalendar
             {
                 Canvas.SetLeft(this, temp.X - this.Width/2.0);
                 Canvas.SetTop(this, temp.Y - this.Height / 2.0);
-                titleBox.Text = (Canvas.GetLeft(this)).ToString();
-                descriptionBox.Text = temp.X.ToString();
+                //Debugging
+                //titleBox.Text = (Canvas.GetLeft(this)).ToString();
+                //descriptionBox.Text = temp.X.ToString();
             }
         }
 
@@ -82,6 +89,8 @@ namespace JacobsCalendar
                 handler(this, sbea);
             }
         }
+
+
 
     }//end Class
 
