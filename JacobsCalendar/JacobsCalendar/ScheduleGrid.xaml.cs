@@ -157,6 +157,7 @@ namespace JacobsCalendar
             {
                 eventGrid.Children.Remove(sb);
                 theCanvas.Children.Add(sb);
+                return true;
             }
             return false;
         }
