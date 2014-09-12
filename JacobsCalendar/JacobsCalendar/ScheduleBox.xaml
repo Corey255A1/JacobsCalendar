@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="200" Background="#FF00CD00" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200" MaxWidth="200" MaxHeight="200" MinWidth="200" MinHeight="200" MouseMove="UserControl_MouseMove">
+             d:DesignHeight="200" d:DesignWidth="200" Background="#FF00CD00" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150" MaxWidth="150" MaxHeight="150" MinWidth="150" MinHeight="150" MouseMove="UserControl_MouseMove" MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
     <Grid Height="175" Width="175">
-        <TextBox Height="28" HorizontalAlignment="Left" Name="titleBox" VerticalAlignment="Top" Width="175" Text="Hello Jacob" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="Lime" />
-        <TextBlock Height="141" HorizontalAlignment="Left" Margin="0,34,0,0" Name="descriptionBox" Text="Drag Me! I Move Jacob!" VerticalAlignment="Top" Width="175" />
+        <TextBox Height="28" HorizontalAlignment="Left" Name="titleBox" VerticalAlignment="Top" Width="135" Text="Hello Jacob" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="Lime" Margin="3,4,0,0" />
+        <TextBlock Height="102" HorizontalAlignment="Left" Margin="2,34,0,0" Name="descriptionBox" Text="Drag Me! I Move Jacob!" VerticalAlignment="Top" Width="135" />
     </Grid>
 </UserControl>

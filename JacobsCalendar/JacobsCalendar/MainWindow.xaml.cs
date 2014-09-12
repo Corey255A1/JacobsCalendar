@@ -22,11 +22,11 @@ namespace JacobsCalendar
         public MainWindow()
         {
             InitializeComponent();
-            ScheduleBox testBox = new ScheduleBox();
-            ScheduleBox testBox2 = new ScheduleBox();
-            Canvas.SetLeft(testBox2, 200);
-            theDisplayCvs.Children.Add(testBox);
-            theDisplayCvs.Children.Add(testBox2);
+            ScheduleGrid schedGrid = new ScheduleGrid(8,2);
+            theDisplayCvs.Children.Add(schedGrid);
+            schedGrid.NewEvent();
+            schedGrid.NewEvent();
+            schedGrid.NewEvent();
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)

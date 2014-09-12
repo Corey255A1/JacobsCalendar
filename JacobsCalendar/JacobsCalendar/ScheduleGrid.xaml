@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="JacobsCalendar.ScheduleGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="387" d:DesignWidth="558" Background="#FF0000DD">
+    <Canvas Name="theCanvas">
+        <Grid Canvas.Left="12" Canvas.Top="192" Name="timeGrid" MinWidth="150" MinHeight="150" Opacity="1" Background="White" />
+        <Grid Canvas.Left="12" Canvas.Top="12" Name="eventGrid" MinWidth="150" MinHeight="150" Background="#FFA3DCFF" />
+    </Canvas>
+</UserControl>

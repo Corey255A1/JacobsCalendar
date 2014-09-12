@@ -1,6 +1,6 @@
 ﻿<Window x:Class="JacobsCalendar.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" MouseMove="Window_MouseMove">
-    <Canvas Name="theDisplayCvs" Background="#FF00005F" />
+        Title="MainWindow" Height="345" Width="682" MouseMove="Window_MouseMove">
+    <Canvas Name="theDisplayCvs" Background="Blue"></Canvas>
 </Window>
