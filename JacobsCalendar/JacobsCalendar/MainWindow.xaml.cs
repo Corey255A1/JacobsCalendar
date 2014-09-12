@@ -26,9 +26,9 @@ namespace JacobsCalendar
             schedGrid = new ScheduleGrid(8, 2);
             theDisplayCvs.Children.Add(schedGrid);
             Canvas.SetTop(schedGrid, 20);
-            schedGrid.NewEvent();
-            schedGrid.NewEvent("This is a test");
-            schedGrid.NewEvent("Test2","A better test");
+            //schedGrid.NewEvent();
+            //schedGrid.NewEvent("This is a test");
+            //schedGrid.NewEvent("Test2","A better test");
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

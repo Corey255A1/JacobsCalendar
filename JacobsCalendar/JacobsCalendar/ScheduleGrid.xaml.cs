@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -28,11 +29,11 @@ namespace JacobsCalendar
         double TGrid_OffsetX;
         double EGrid_OffsetY;
         double EGrid_OffsetX;
-        int NextEventCol = 0;
+        ArrayList EventList;
         public ScheduleGrid(int cols, int rows)
         {
             InitializeComponent();
-
+            EventList = new ArrayList();
             Rows = rows;
             Cols = cols;
             TGrid_OffsetX = Canvas.GetLeft(timeGrid)+GRID_SIZE/2;
@@ -85,16 +86,17 @@ namespace JacobsCalendar
          */
         public void Add(ScheduleBox newBox)
         {
-            newBox.ScheduleBoxClicked += this.ScheduleBox_Clicked;
+            newBox.ScheduleBoxEvent += this.ScheduleBox_Event;
             timeGrid.Children.Add(newBox);
         }
 
         public void NewEvent(String title = "New Event", String desc = "A New Event")
         {
             ScheduleBox newBox = new ScheduleBox(title,desc);
-            newBox.ScheduleBoxClicked += this.ScheduleBox_Clicked;
+            newBox.ScheduleBoxEvent += this.ScheduleBox_Event;
             eventGrid.Children.Add(newBox);
-            Grid.SetColumn(newBox, NextEventCol++);
+            EventList.Add(newBox);
+            Grid.SetColumn(newBox, (EventList.Count-1));
         }
 
         private GridPos CanvasToGrid(double x, double y)
@@ -136,7 +138,7 @@ namespace JacobsCalendar
                 switch (gp.WhichGrid)
                 {
                     case GridNames.Time: timeGrid.Children.Add(sb); break;
-                    case GridNames.Event: eventGrid.Children.Add(sb); break;
+                    //case GridNames.Event: eventGrid.Children.Add(sb); break;
                 }
                 
                 return true;
@@ -153,27 +155,66 @@ namespace JacobsCalendar
                 theCanvas.Children.Add(sb);
                 return true;
             }
+            
             else if (eventGrid.Children.Contains(sb))
             {
+                //Possibly going a new direction with the event grid
+                //eventGrid.Children.Remove(sb);
+                //theCanvas.Children.Add(sb);
+
+                /* New Direction: Adding events to the event list, will leave them there
+                 * As resources to be chosen and dragged on to the schedule grid
+                 * So here we clone the schedule box and add it to the canvas
+                 * at the location of the original Event Box
+                 * 
+                 */
+                ScheduleBox nsb = new ScheduleBox(sb.Title(), sb.Description(), sb.ScheduleID);
+                nsb.ScheduleBoxEvent += this.ScheduleBox_Event;
+                Canvas.SetLeft(nsb, Canvas.GetLeft(sb));
+                Canvas.SetTop(nsb, Canvas.GetTop(sb));
+                theCanvas.Children.Add(nsb);
+               return true;
+            }
+            return false;
+        }
+        public bool DeleteScheduleBox(ScheduleBox sb)
+        {
+            if (timeGrid.Children.Contains(sb))
+            {
+                timeGrid.Children.Remove(sb);
+                return true;
+            }
+            else if (eventGrid.Children.Contains(sb))
+            {
+                //When we delete someone from the event grid
+                //Slide all of the remaining grid items to the left
+                int c = Grid.GetColumn(sb);
                 eventGrid.Children.Remove(sb);
-                theCanvas.Children.Add(sb);
+                for (int col = c+1; col < EventList.Count; col++)
+                {
+                    Grid.SetColumn((UIElement)EventList[col], col - 1);
+                }
+                EventList.Remove(sb);
+                return true;
+            }
+            else if (theCanvas.Children.Contains(sb))
+            {
+                theCanvas.Children.Remove(sb);
                 return true;
             }
             return false;
         }
 
-        private void ScheduleBox_Clicked(object sender, SchedBoxEventArgs e)
+        private void ScheduleBox_Event(object sender, SchedBoxEventArgs e)
         {
             if (sender is ScheduleBox)
             {
                 ScheduleBox sbSender = ((ScheduleBox)sender);
-                if (e.Clicked)
+                switch(e.EventType)
                 {
-                    PopFromGrid(sbSender);
-                }
-                else
-                {
-                    SnapToGrid(sbSender);
+                    case SchedBoxEventType.MouseDown: PopFromGrid(sbSender); break;
+                    case SchedBoxEventType.MouseUp: SnapToGrid(sbSender); break;
+                    case SchedBoxEventType.Deleted: DeleteScheduleBox(sbSender); break;
                 } 
             }
         }

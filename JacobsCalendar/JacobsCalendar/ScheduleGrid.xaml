@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignHeight="387" d:DesignWidth="558" Background="#FF0000DD">
+             mc:Ignorable="d" d:DesignHeight="487" d:DesignWidth="558" Background="#FF0000DD">
     <Canvas Name="theCanvas">
-        <Grid Canvas.Left="12" Canvas.Top="192" Name="timeGrid" MinWidth="150" MinHeight="150" Opacity="1" Background="White" />
-        <Grid Canvas.Left="12" Canvas.Top="12" Name="eventGrid" MinWidth="150" MinHeight="150" Background="#FFA3DCFF" />
+        <Grid Canvas.Left="37" Canvas.Top="252" Name="timeGrid" MinWidth="150" MinHeight="150" Opacity="1" Background="White" />
+        <Grid Canvas.Left="37" Canvas.Top="72" Name="eventGrid" MinWidth="150" MinHeight="150" Background="#FFA3DCFF" />
+        <Label Canvas.Left="37" Canvas.Top="28" Content="Available Resources" FontFamily="Calibri" FontSize="32" FontWeight="Bold" Foreground="Black" Height="42" Name="label2" Width="277" />
+        <Label Canvas.Left="38" Canvas.Top="27" Content="Available Resources" Height="42" Name="label1" Width="277" FontFamily="Calibri" FontWeight="Bold" FontSize="32" Foreground="White" />
     </Canvas>
 </UserControl>

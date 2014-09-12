@@ -6,6 +6,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200" Background="#FF00CD00" BorderThickness="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150" MaxWidth="150" MaxHeight="150" MinWidth="150" MinHeight="150" MouseMove="UserControl_MouseMove" MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
     <Grid Height="175" Width="175">
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Color" Click="Color_Menu_Chosen" />
+                <MenuItem Header="Delete" Click="Delete_Menu_Chosen" />
+            </ContextMenu>
+        </Grid.ContextMenu>
         <TextBox Height="28" HorizontalAlignment="Left" Name="titleBox" VerticalAlignment="Top" Width="135" Text="Hello Jacob" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="Lime" Margin="3,4,0,0" />
         <TextBlock Height="102" HorizontalAlignment="Left" Margin="2,34,0,0" Name="descriptionBox" Text="Drag Me! I Move Jacob!" VerticalAlignment="Top" Width="135" />
     </Grid>
