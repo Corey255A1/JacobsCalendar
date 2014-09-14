@@ -135,10 +135,10 @@ namespace JacobsCalendar
         private GridPos CanvasToGrid(double x, double y)
         {
             GridPos gp;
-            if (y >= TGrid_OffsetY)
+            if (y >= 0)
             {
-                gp.Col = (int)((x - TGrid_OffsetX) / GRID_SIZE) + 1;
-                gp.Row = (int)((y - TGrid_OffsetY) / GRID_SIZE) + 1;
+                gp.Col = (int)(x / GRID_SIZE) + 1;
+                gp.Row = (int)(y / GRID_SIZE) + 1;
                 gp.WhichGrid = GridNames.Time;
             }
             else
@@ -162,9 +162,8 @@ namespace JacobsCalendar
                 double x = Canvas.GetLeft(sb);
                 double y = Canvas.GetTop(sb);
                 //Get Center Point
-                x += (sb.Width / 2);
-                y += (sb.Height / 2);
-                GridPos gp = CanvasToGrid(x, y);
+                Point p = theCanvas.TranslatePoint(new Point(x,y), timeGrid);
+                GridPos gp = CanvasToGrid(p.X, p.Y);
                 theCanvas.Children.Remove(sb);
                 Grid.SetColumn(sb, gp.Col);
                 Grid.SetRow(sb, gp.Row);
@@ -251,6 +250,7 @@ namespace JacobsCalendar
                 } 
             }
         }
+
 
     }//end class
     public enum GridNames
