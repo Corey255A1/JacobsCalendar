@@ -30,6 +30,11 @@ namespace JacobsCalendar
         double EGrid_OffsetY;
         double EGrid_OffsetX;
         ArrayList EventList;
+        // List of Lists of Events. Used to dereference
+        // the elements quickly. E.G. if I change the
+        // name of an event, change all the ones I dragged out
+        // already.
+        ArrayList UsedEventsList; 
         public ScheduleGrid()
         {
             InitializeComponent();
@@ -52,6 +57,7 @@ namespace JacobsCalendar
         {
 
             EventList = new ArrayList();
+            UsedEventsList = new ArrayList();
             TGrid_OffsetX = Canvas.GetLeft(timeGrid) + GRID_SIZE / 2;
             TGrid_OffsetY = Canvas.GetTop(timeGrid) + GRID_SIZE / 2;
             EGrid_OffsetX = Canvas.GetLeft(eventGrid);
@@ -115,7 +121,7 @@ namespace JacobsCalendar
         }
 
         /**
-         * Add a new Box to the Grid
+         * Add a new Box to the Grid - Debugging purposes only
          */
         public void Add(ScheduleBox newBox)
         {
@@ -129,6 +135,7 @@ namespace JacobsCalendar
             newBox.ScheduleBoxEvent += this.ScheduleBox_Event;
             eventGrid.Children.Add(newBox);
             EventList.Add(newBox);
+            UsedEventsList.Add(new ArrayList());
             Grid.SetColumn(newBox, (EventList.Count-1));
         }
 
@@ -143,10 +150,13 @@ namespace JacobsCalendar
             }
             else
             {
+                //This is not being used so
                 gp.Col = (int)((x - EGrid_OffsetX) / GRID_SIZE);
                 gp.Row = 0;
                 gp.WhichGrid = GridNames.Event;
             }
+            if (gp.Col <= 0) gp.Col = 1;
+            if (gp.Row <= 0) gp.Row = 1;
             return gp;
         }
 
@@ -190,29 +200,42 @@ namespace JacobsCalendar
             
             else if (eventGrid.Children.Contains(sb))
             {
-                //Possibly going a new direction with the event grid
-                //eventGrid.Children.Remove(sb);
-                //theCanvas.Children.Add(sb);
-
-                /* New Direction: Adding events to the event list, will leave them there
+                /* Adding events to the event list, will leave them there
                  * As resources to be chosen and dragged on to the schedule grid
                  * So here we clone the schedule box and add it to the canvas
                  * at the location of the original Event Box
-                 * 
                  */
                 ScheduleBox nsb = new ScheduleBox(sb.Title(), sb.Description(), sb.ScheduleID);
                 nsb.ScheduleBoxEvent += this.ScheduleBox_Event;
                 Canvas.SetLeft(nsb, Canvas.GetLeft(sb));
                 Canvas.SetTop(nsb, Canvas.GetTop(sb));
+                ((ArrayList)UsedEventsList[EventList.IndexOf(sb)]).Add(nsb);
                 theCanvas.Children.Add(nsb);
                return true;
             }
             return false;
         }
+
+        //Not the Most efficient - refine later
+        private int ScheduleIDToEventID(int nID)
+        {
+            for (int i = 0; i < EventList.Count; i++)
+            {
+                if (((ScheduleBox)EventList[i]).ScheduleID == nID) return i;
+            }
+            return -1;
+        }
+
         public bool DeleteScheduleBox(ScheduleBox sb)
         {
             if (timeGrid.Children.Contains(sb))
             {
+                //Update our list of lists
+                int nID = ScheduleIDToEventID(sb.ScheduleID);
+                if (nID >= 0)
+                {
+                    ((ArrayList)UsedEventsList[nID]).Remove(sb);
+                }
                 timeGrid.Children.Remove(sb);
                 return true;
             }
@@ -226,12 +249,43 @@ namespace JacobsCalendar
                 {
                     Grid.SetColumn((UIElement)EventList[col], col - 1);
                 }
+                //Update our List of Lists
+                int nID = ScheduleIDToEventID(sb.ScheduleID);
+                foreach(ScheduleBox tb in ((ArrayList)UsedEventsList[nID]))
+                {
+                    timeGrid.Children.Remove(tb);
+                }
+                UsedEventsList.RemoveAt(nID);
                 EventList.Remove(sb);
                 return true;
             }
             else if (theCanvas.Children.Contains(sb))
             {
                 theCanvas.Children.Remove(sb);
+                return true;
+            }
+            return false;
+        }
+
+        public bool ChangeScheduleBox(ScheduleBox sb)
+        {
+            if (timeGrid.Children.Contains(sb))
+            {
+                //Do Nothing yet
+                return true;
+            }
+            else if (eventGrid.Children.Contains(sb))
+            {
+                int nID = ScheduleIDToEventID(sb.ScheduleID);
+                foreach (ScheduleBox tb in ((ArrayList)UsedEventsList[nID]))
+                {
+                    tb.Title(sb.Title());
+                }
+                return true;
+            }
+            else if (theCanvas.Children.Contains(sb))
+            {
+                //Do Nothing yet ... though Nothing should need done here
                 return true;
             }
             return false;
@@ -247,6 +301,7 @@ namespace JacobsCalendar
                     case SchedBoxEventType.MouseDown: PopFromGrid(sbSender); break;
                     case SchedBoxEventType.MouseUp: SnapToGrid(sbSender); break;
                     case SchedBoxEventType.Deleted: DeleteScheduleBox(sbSender); break;
+                    case SchedBoxEventType.Changed: ChangeScheduleBox(sbSender); break;
                 } 
             }
         }

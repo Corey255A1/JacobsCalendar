@@ -12,7 +12,7 @@
                 <MenuItem Header="Delete" Click="Delete_Menu_Chosen" />
             </ContextMenu>
         </Grid.ContextMenu>
-        <TextBox Height="28" HorizontalAlignment="Left" Name="titleBox" VerticalAlignment="Top" Width="135" Text="Hello Jacob" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="Lime" Margin="3,4,0,0" />
+        <TextBox Height="28" HorizontalAlignment="Left" Name="titleBox" VerticalAlignment="Top" Width="135" Text="Hello Jacob" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="Lime" Margin="3,4,0,0" TextChanged="titleBox_TextChanged" />
         <TextBlock Height="102" HorizontalAlignment="Left" Margin="2,34,0,0" Name="descriptionBox" Text="Drag Me! I Move Jacob!" VerticalAlignment="Top" Width="135" />
     </Grid>
 </UserControl>

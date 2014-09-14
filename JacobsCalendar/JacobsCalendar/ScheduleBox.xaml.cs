@@ -106,6 +106,18 @@ namespace JacobsCalendar
             }
         }
 
+        private void SchedBoxModified()
+        {
+            EventHandler<SchedBoxEventArgs> handler = ScheduleBoxEvent;
+            SchedBoxEventArgs sbea = new SchedBoxEventArgs();
+            MouseClicked = false;
+            sbea.EventType = SchedBoxEventType.Changed;
+            if (handler != null)
+            {
+                handler(this, sbea);
+            }
+        }
+
         public void Title(String title)
         {
             titleBox.Text = title;
@@ -139,6 +151,11 @@ namespace JacobsCalendar
             }
         }
 
+        private void titleBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SchedBoxModified();
+        }
+
 
 
     }//end Class
@@ -150,6 +167,6 @@ namespace JacobsCalendar
     {
         public SchedBoxEventType EventType { get; set; }
     }
-    public enum SchedBoxEventType { MouseUp, MouseDown, Deleted }
+    public enum SchedBoxEventType { MouseUp, MouseDown, Deleted, Changed }
 
 }
