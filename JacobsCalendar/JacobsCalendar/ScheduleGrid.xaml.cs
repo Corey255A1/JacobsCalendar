@@ -205,7 +205,7 @@ namespace JacobsCalendar
                  * So here we clone the schedule box and add it to the canvas
                  * at the location of the original Event Box
                  */
-                ScheduleBox nsb = new ScheduleBox(sb.Title(), sb.Description(), sb.ScheduleID);
+                ScheduleBox nsb = new ScheduleBox(sb.Title(), sb.Description(), sb.ScheduleID, sb.BgColor());
                 nsb.ScheduleBoxEvent += this.ScheduleBox_Event;
                 Canvas.SetLeft(nsb, Canvas.GetLeft(sb));
                 Canvas.SetTop(nsb, Canvas.GetTop(sb));
@@ -280,6 +280,7 @@ namespace JacobsCalendar
                 foreach (ScheduleBox tb in ((ArrayList)UsedEventsList[nID]))
                 {
                     tb.Title(sb.Title());
+                    tb.BgColor(sb.BgColor());
                 }
                 return true;
             }

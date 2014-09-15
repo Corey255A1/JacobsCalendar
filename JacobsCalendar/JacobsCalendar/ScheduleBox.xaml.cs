@@ -31,18 +31,31 @@ namespace JacobsCalendar
         private bool Cloned = false;
         private static int AutoScheduleID = 0;
         public int ScheduleID {get; private set;}
+
         public ScheduleBox()
         {
             InitializeComponent();
             ScheduleID = AutoScheduleID++;
+            Random rnd = new Random();
+            boxCtrl.Background = new SolidColorBrush(Color.FromRgb((byte)rnd.Next(0, 255),
+                                                                   (byte)rnd.Next(0, 255),
+                                                                   (byte)rnd.Next(0, 255)));
+            colorCtl.ColorCtlEvent += this.color_Changed;
         }
+
         public ScheduleBox(String title, String desc)
         {
             InitializeComponent();
             titleBox.Text = title;
             descriptionBox.Text = desc;
+            Random rnd = new Random();
+            boxCtrl.Background = new SolidColorBrush(Color.FromRgb((byte)rnd.Next(0, 255),
+                                                                   (byte)rnd.Next(0, 255),
+                                                                   (byte)rnd.Next(0, 255)));
             ScheduleID = AutoScheduleID++;
+            colorCtl.ColorCtlEvent += this.color_Changed;
         }
+
         public ScheduleBox(String title, String desc, int nID)
         {
             InitializeComponent();
@@ -50,6 +63,18 @@ namespace JacobsCalendar
             descriptionBox.Text = desc;
             ScheduleID = nID;
             Cloned = true;
+            colorCtl.ColorCtlEvent += this.color_Changed;
+        }
+
+        public ScheduleBox(String title, String desc, int nID, Brush color)
+        {
+            InitializeComponent();
+            titleBox.Text = title;
+            descriptionBox.Text = desc;
+            ScheduleID = nID;
+            Cloned = true;
+            boxCtrl.Background = color;
+            colorCtl.ColorCtlEvent += this.color_Changed;
         }
 
         /**
@@ -135,9 +160,25 @@ namespace JacobsCalendar
             return descriptionBox.Text;
         }
 
+        public Brush BgColor()
+        {
+            return boxCtrl.Background;
+        }
+        public void BgColor(Brush br)
+        {
+            boxCtrl.Background = br;
+        }
         private void Color_Menu_Chosen(object sender, RoutedEventArgs e)
         {
-
+            if (((MenuItem)sender).IsChecked)
+            {
+                colorCtl.Visibility = Visibility.Visible;
+                colorCtl.SetColor(boxCtrl.Background);
+            }
+            else
+            {
+                colorCtl.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Delete_Menu_Chosen(object sender, RoutedEventArgs e)
@@ -153,6 +194,12 @@ namespace JacobsCalendar
 
         private void titleBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SchedBoxModified();
+        }
+
+        private void color_Changed(object sender, ColorCtlEventArgs e)
+        {
+            boxCtrl.Background = ((ColorControl)sender).GetColor();
             SchedBoxModified();
         }
 
