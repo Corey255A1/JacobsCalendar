@@ -68,15 +68,7 @@ namespace JacobsCalendar
                 handler(this, sbea);
             }
         }
-
-        private void redSlide_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-        {
-            int t=0;
-            t++;
-        }
-        
-
-    }
+    }//end Class
 
     /// <summary>
     /// The EventArgs class for The Schedule Box
