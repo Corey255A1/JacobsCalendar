@@ -68,10 +68,12 @@ namespace JacobsCalendar
             ColumnDefinition cd = new ColumnDefinition();
             cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE / 2));
             timeGrid.ColumnDefinitions.Add(cd);
-
-            RowDefinition rd = new RowDefinition();
-            rd.SetValue(RowDefinition.HeightProperty, new GridLength(GRID_SIZE / 2));
-            timeGrid.RowDefinitions.Add(rd);
+            cd = new ColumnDefinition();
+            cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE / 2));
+            colGrid.ColumnDefinitions.Add(cd);
+            //RowDefinition rd = new RowDefinition();
+            //rd.SetValue(RowDefinition.HeightProperty, new GridLength(GRID_SIZE / 2));
+            //timeGrid.RowDefinitions.Add(rd);
 
         }
         public void AddColumns(int count)
@@ -82,15 +84,15 @@ namespace JacobsCalendar
             {
                 cd = new ColumnDefinition();
                 cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE));
-                timeGrid.ColumnDefinitions.Add(cd);
+                colGrid.ColumnDefinitions.Add(cd);
                 lbl = new TextBox();
                 lbl.Text = "COLUMN: " + (Cols++);
                 Grid.SetColumn(lbl, Cols);
-                timeGrid.Children.Add(lbl);
+                colGrid.Children.Add(lbl);
 
                 cd = new ColumnDefinition();
                 cd.SetValue(ColumnDefinition.WidthProperty, new GridLength(GRID_SIZE));
-                eventGrid.ColumnDefinitions.Add(cd);
+                timeGrid.ColumnDefinitions.Add(cd);
 
             }
         }
@@ -104,8 +106,8 @@ namespace JacobsCalendar
                 rd.SetValue(RowDefinition.HeightProperty, new GridLength(GRID_SIZE));
                 timeGrid.RowDefinitions.Add(rd);
                 lbl = new TextBox();
-                lbl.Text = "ROW: " + (Rows++);
-                Grid.SetRow(lbl, Rows);
+                lbl.Text = "ROW: " + (Rows);
+                Grid.SetRow(lbl, Rows++);
                 timeGrid.Children.Add(lbl);
             }
         }
@@ -142,21 +144,21 @@ namespace JacobsCalendar
         private GridPos CanvasToGrid(double x, double y)
         {
             GridPos gp;
-            if (y >= 0)
+           // if (y >= 0)
             {
                 gp.Col = (int)(x / GRID_SIZE) + 1;
-                gp.Row = (int)(y / GRID_SIZE) + 1;
+                gp.Row = (int)(y / GRID_SIZE);
                 gp.WhichGrid = GridNames.Time;
             }
-            else
-            {
-                //This is not being used so
-                gp.Col = (int)((x - EGrid_OffsetX) / GRID_SIZE);
-                gp.Row = 0;
-                gp.WhichGrid = GridNames.Event;
-            }
+            //else
+            //{
+            //    //This is not being used so
+            //    gp.Col = (int)((x - EGrid_OffsetX) / GRID_SIZE);
+            //    gp.Row = 0;
+            //    gp.WhichGrid = GridNames.Event;
+            //}
             if (gp.Col <= 0) gp.Col = 1;
-            if (gp.Row <= 0) gp.Row = 1;
+            if (gp.Row <= 0) gp.Row = 0;
             return gp;
         }
 
@@ -172,7 +174,7 @@ namespace JacobsCalendar
                 double x = Canvas.GetLeft(sb);
                 double y = Canvas.GetTop(sb);
                 //Get Center Point
-                Point p = theCanvas.TranslatePoint(new Point(x,y), timeGrid);
+                Point p = theCanvas.TranslatePoint(new Point(x-sb.Width/2,y+sb.Height/2), timeGrid);
                 GridPos gp = CanvasToGrid(p.X, p.Y);
                 theCanvas.Children.Remove(sb);
                 Grid.SetColumn(sb, gp.Col);
@@ -304,6 +306,14 @@ namespace JacobsCalendar
                     case SchedBoxEventType.Deleted: DeleteScheduleBox(sbSender); break;
                     case SchedBoxEventType.Changed: ChangeScheduleBox(sbSender); break;
                 } 
+            }
+        }
+
+        private void timeScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.HorizontalChange != 0)
+            {
+                colScroller.ScrollToHorizontalOffset(e.HorizontalOffset);
             }
         }
 
